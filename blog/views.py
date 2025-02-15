@@ -5,6 +5,10 @@ from . import models
 # Create your views here.
 
 
+def about(request):
+    return render(request, 'blog/about.html')
+
+
 def home(request):
     posts = models.Post.objects.all()
     return render(request, 'blog/home.html', context={'posts': posts})

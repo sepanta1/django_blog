@@ -1,15 +1,21 @@
 {% extends "blog/base.html" %}
+
 {% block content %}
+<div class="container mt-4">
     {% for post in posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="article-metadata">
+                        <a class="mr-2 text-primary" href="#">{{ post.author }}</a>
+                        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                    </div>
+                </div>
+                <h5 class="card-title mt-3"><a class="text-dark" href="#">{{ post.title }}</a></h5>
+                <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                <a href="#" class="btn btn-primary btn-sm">Read more</a>
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
+        </div>
     {% endfor %}
+</div>
 {% endblock content %}
