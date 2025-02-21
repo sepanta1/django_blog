@@ -2,17 +2,22 @@
 {% block content %}
     <article class="media content-section">
         <!-- Author's Profile Image -->
-        <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" alt="{{ object.author.username }}">
+        <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" alt="{{ object.author.username }}" style="width: 60px; height: 60px; object-fit: cover;">
 
         <div class="media-body">
             <!-- Post Metadata (Author and Date) -->
-            <div class="article-metadata">
-                <p>{{ object.author }}</p>
-                <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-                {% if object.author == user%}
-                <a href="{% url 'post-update' object.id %}">Update</a>
-                <a href="{% url 'post-delete' object.id %}">Delete</a>
-                {% endif%}
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+                    <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+                </div>
+
+                {% if object.author == user %}
+                    <div class="ml-3">
+                        <a href="{% url 'post-update' object.id %}" class="btn btn-sm btn-outline-primary">Update</a>
+                        <a href="{% url 'post-delete' object.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                {% endif %}
             </div>
 
             <!-- Post Title -->
