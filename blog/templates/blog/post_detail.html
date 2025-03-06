@@ -1,36 +1,32 @@
 {% extends "blog/base.html" %}
+
 {% block content %}
-    <article class="media content-section">
-        <!-- Author's Profile Image -->
-        <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" alt="{{ object.author.username }}" style="width: 60px; height: 60px; object-fit: cover;">
+  <article class="media content-section">
+    <!-- Author Profile Image -->
+    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" alt="{{ object.author.username }}" style="width: 60px; height: 60px; object-fit: cover;">
 
-        <div class="media-body">
-            <!-- Post Metadata (Author and Date) -->
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div>
-                    <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-                    <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-                </div>
-
-                {% if object.author == user %}
-                    <div class="ml-3">
-                        <a href="{% url 'post-update' object.id %}" class="btn btn-sm btn-outline-primary">Update</a>
-                        <a href="{% url 'post-delete' object.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Post Title -->
-            <h2 class="article-title">{{ object.title }}</h2>
-
-            <!-- Post Description -->
-            {% if object.description %}
-                <p class="lead">{{ object.description }}</p>
-                <hr> <!-- Add a horizontal line to separate description and content -->
-            {% endif %}
-
-            <!-- Post Content -->
-            <p class="article-content">{{ object.content }}</p>
+    <div class="media-body">
+      <!-- Article Metadata -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         </div>
-    </article>
+        
+        {% if object.author == user %}
+          <!-- Post management buttons (Update/Delete) -->
+          <div class="ml-3">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'post-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Post Title -->
+      <h2 class="article-title mb-3">{{ object.title }}</h2>
+
+      <!-- Post Content -->
+      <p class="article-content">{{ object.description}}</p>
+    </div>
+  </article>
 {% endblock content %}

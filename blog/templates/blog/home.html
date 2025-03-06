@@ -1,19 +1,25 @@
 {% extends "blog/base.html" %}
 {% block content %}
-  <div class="container mt-5">
-    <div class="list-group">
-      {% for post in posts %}
-        <a href="{% url 'post-detail' post.id %}" class="list-group-item list-group-item-action mb-3 shadow-sm rounded">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ post.title }}</h5>
-            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-          </div>
-          <p class="mb-1">{{ post.content|truncatewords:40 }}</p>
-          <small class="text-muted">By {{ post.author }}</small>
-        </a>
-      {% endfor %}
-    </div>
+{% for post in posts %}
+<article class="media content-section">
+  <img class="rounded-circle" src="{{ post.author.profile.image.url }}" alt="{{ post.author.username }}" 
+     style="width: 60px; height: 60px; object-fit: cover; border: 2px solid #ddd; padding: 2px;">
 
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+      <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+    </div>
+    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+    <p class="text-truncate" style="max-width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+      {{ post.description }}
+  </p>
+  
+  </div>
+</article>
+{% endfor %}
+
+    <!-- Pagination -->
     {% if is_paginated %}
       <div class="d-flex justify-content-center mt-4">
         <nav aria-label="Page navigation">
@@ -60,4 +66,5 @@
       </div>
     {% endif %}
   </div>
+
 {% endblock content %}
